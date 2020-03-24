@@ -89,6 +89,8 @@
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
     configuration.userContentController = userContentController;
     configuration.allowsInlineMediaPlayback = true;
+     configuration.preferences = [[WKPreferences alloc] init];
+      configuration.preferences.javaScriptEnabled = true;
     [self updateAutoMediaPlaybackPolicy:args[@"autoMediaPlaybackPolicy"]
                         inConfiguration:configuration];
 
