@@ -72,7 +72,7 @@
               binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
   if (self = [super init]) {
     _viewId = viewId;
-
+    printf("hellojavaScriptEnabled");
     NSString* channelName = [NSString stringWithFormat:@"plugins.flutter.io/webview_%lld", viewId];
     _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
     _javaScriptChannelNames = [[NSMutableSet alloc] init];
@@ -89,8 +89,8 @@
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
     configuration.userContentController = userContentController;
     configuration.allowsInlineMediaPlayback = true;
-     configuration.preferences = [[WKPreferences alloc] init];
-      configuration.preferences.javaScriptEnabled = true;
+    configuration.preferences = [[WKPreferences alloc] init];
+    configuration.preferences.javaScriptEnabled = true;
     [self updateAutoMediaPlaybackPolicy:args[@"autoMediaPlaybackPolicy"]
                         inConfiguration:configuration];
 
@@ -329,38 +329,39 @@
 
 - (void)updateJsMode:(NSNumber*)mode {
   WKPreferences* preferences = [[_webView configuration] preferences];
-  switch ([mode integerValue]) {
-    case 0:  // disabled
-      [preferences setJavaScriptEnabled:NO];
-      break;
-    case 1:  // unrestricted
-      [preferences setJavaScriptEnabled:YES];
-      break;
-    default:
-      NSLog(@"webview_flutter: unknown JavaScript mode: %@", mode);
-  }
+//   switch ([mode integerValue]) {
+//     case 0:  // disabled
+//       [preferences setJavaScriptEnabled:NO];
+//       break;
+//     case 1:  // unrestricted
+//       [preferences setJavaScriptEnabled:YES];
+//       break;
+//     default:
+//       NSLog(@"webview_flutter: unknown JavaScript mode: %@", mode);
+//   }
 }
 
 - (void)updateAutoMediaPlaybackPolicy:(NSNumber*)policy
                       inConfiguration:(WKWebViewConfiguration*)configuration {
-  switch ([policy integerValue]) {
-    case 0:  // require_user_action_for_all_media_types
-      if (@available(iOS 10.0, *)) {
-        configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeAll;
-      } else {
-        configuration.mediaPlaybackRequiresUserAction = true;
-      }
-      break;
-    case 1:  // always_allow
-      if (@available(iOS 10.0, *)) {
-        configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone;
-      } else {
-        configuration.mediaPlaybackRequiresUserAction = false;
-      }
-      break;
-    default:
-      NSLog(@"webview_flutter: unknown auto media playback policy: %@", policy);
-  }
+                        configuration.mediaPlaybackRequiresUserAction = true
+//   switch ([policy integerValue]) {
+//     case 0:  // require_user_action_for_all_media_types
+//       if (@available(iOS 10.0, *)) {
+//         configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeAll;
+//       } else {
+//         configuration.mediaPlaybackRequiresUserAction = true;
+//       }
+//       break;
+//     case 1:  // always_allow
+//       if (@available(iOS 10.0, *)) {
+//         configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone;
+//       } else {
+//         configuration.mediaPlaybackRequiresUserAction = false;
+//       }
+//       break;
+//     default:
+//       NSLog(@"webview_flutter: unknown auto media playback policy: %@", policy);
+//   }
 }
 
 - (bool)loadRequest:(NSDictionary<NSString*, id>*)request {
