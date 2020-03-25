@@ -343,7 +343,7 @@
 
 - (void)updateAutoMediaPlaybackPolicy:(NSNumber*)policy
                       inConfiguration:(WKWebViewConfiguration*)configuration {
-                        configuration.mediaPlaybackRequiresUserAction = true
+                        configuration.mediaPlaybackRequiresUserAction = true;
 //   switch ([policy integerValue]) {
 //     case 0:  // require_user_action_for_all_media_types
 //       if (@available(iOS 10.0, *)) {
